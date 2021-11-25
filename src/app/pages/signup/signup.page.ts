@@ -1,20 +1,20 @@
-import { AuthenticationService } from './../../services/authentication.service';
+import { RegisterService } from './../../services/register.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
  
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class SignupPage implements OnInit {
   credentials: FormGroup;
  
   constructor(
     private fb: FormBuilder,
-    private authService: AuthenticationService,
+    private authService: RegisterService,
     private alertController: AlertController,
     private router: Router,
     private loadingController: LoadingController
@@ -23,16 +23,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
-      password: ['cityslicka', [Validators.required, Validators.minLength(6)]],
+      password: ['pistol', [Validators.required, Validators.minLength(6)]],
     },
     );
   }
  
-  async login() {
+  async register() {
     const loading = await this.loadingController.create();
     await loading.present();
     
-    this.authService.login(this.credentials.value).subscribe(
+    this.authService.register(this.credentials.value).subscribe(
       async (res) => {
         await loading.dismiss();        
         this.router.navigateByUrl('/tabs', { replaceUrl: true });
@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
       async (res) => {
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Login failed',
+          header: 'Register failed',
           message: res.error.error,
           buttons: ['OK'],
         });

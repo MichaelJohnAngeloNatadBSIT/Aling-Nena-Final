@@ -6,7 +6,7 @@
  
 <ion-content>
  
-  <form (ngSubmit)="login()" [formGroup]="credentials">
+  <form (ngSubmit)="register()" [formGroup]="credentials">
     <div class="input-group">
       <ion-item>
         <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
@@ -24,17 +24,6 @@
       </div>
     </div>
  
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" [routerLink]="['/signup']" expand="block" color="light" fill="clear">Not yet a member? Sign up!
-    </ion-button>
- 
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-google" slot="start"></ion-icon>
-      Sign in with Google
-    </ion-button>
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-apple" slot="start"></ion-icon>
-      Sign in with Apple
-    </ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Register</ion-button>
   </form>
 </ion-content>
