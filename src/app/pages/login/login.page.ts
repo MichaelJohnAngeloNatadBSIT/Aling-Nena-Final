@@ -22,12 +22,12 @@ export class LoginPage implements OnInit {
  
   ngOnInit() {
     this.credentials = this.fb.group({
-      email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
-      password: ['cityslicka', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     },
     );
   }
- 
+  
   async login() {
     const loading = await this.loadingController.create();
     await loading.present();

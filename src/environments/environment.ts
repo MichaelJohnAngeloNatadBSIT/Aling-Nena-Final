@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyDmbPzBqozu9ljAo8DZSbMVsDtCqVgdT9E",
+    authDomain: "aling-nena-app.firebaseapp.com",
+    databaseURL: "https://aling-nena-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "aling-nena-app",
+    storageBucket: "aling-nena-app.appspot.com",
+    messagingSenderId: "484819037061",
+    appId: "1:484819037061:web:b13890136443c7262b72ec",
+    measurementId: "G-GWGY2MM5MH"
+  }
 };
 
 /*

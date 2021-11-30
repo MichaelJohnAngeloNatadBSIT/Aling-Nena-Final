@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { User } from "./shared/user";
  
 import { Storage } from '@capacitor/storage';
 
@@ -16,7 +19,9 @@ export class RegisterService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
  
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient, 
+    public afStore: AngularFirestore) {
     this.loadToken();
   }
  
@@ -32,7 +37,7 @@ export class RegisterService {
   }
  
   register(credentials: {email, password}): Observable<any> {
-    return this.http.post(`https://reqres.in/api/register`, credentials).pipe(
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=`+environment.firebase.apiKey, credentials).pipe(
       map((data: any) => data.token),
       switchMap(token => {
         return from(Storage.set({key: TOKEN_KEY, value: token}));
@@ -41,6 +46,21 @@ export class RegisterService {
         this.isAuthenticated.next(true);
       })
     )
+  }
+
+  // Store user in localStorage
+  SetUserData(user) {
+    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);
+    const userData: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified
+    }
+    return userRef.set(userData, {
+      merge: true
+    })
   }
  
   logout(): Promise<void> {

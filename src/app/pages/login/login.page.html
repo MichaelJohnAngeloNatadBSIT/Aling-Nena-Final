@@ -28,7 +28,7 @@
     <ion-button type="button" [routerLink]="['/signup']" expand="block" color="light" fill="clear">Not yet a member? Sign up!
     </ion-button>
  
-    <ion-button type="button" expand="block" color="tertiary">
+    <ion-button type="button" expand="block" color="tertiary" (click)="authService.GoogleAuth()">
       <ion-icon name="logo-google" slot="start"></ion-icon>
       Sign in with Google
     </ion-button>
@@ -37,4 +37,22 @@
       Sign in with Apple
     </ion-button>
   </form>
+
+  <!-- <form>    
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" #email required></ion-input>
+    </ion-item> 
+
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" #password required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col> 
+      <ion-button type="submit" (click)="logIn(email, password)" expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+  </form> -->
 </ion-content>

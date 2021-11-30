@@ -15,6 +15,23 @@
         <span *ngIf="email.errors?.required">Email is required</span>
         <span *ngIf="email.errors?.email">Email is invalid</span>
       </div>
+
+
+      <ion-item>
+        <ion-input type="text" placeholder="Address" formControlName="address"></ion-input>
+      </ion-item>
+      <div *ngIf="!address.errors" class="errors">
+        <span *ngIf="address.errors?.required">address is required</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Full Name" formControlName="name"></ion-input>
+      </ion-item>
+      <div *ngIf="!name.errors" class="errors">
+        <span *ngIf="name.errors?.required">Full Name is required</span>
+      </div>
+
+
       <ion-item>
         <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
       </ion-item>
@@ -25,5 +42,6 @@
     </div>
  
     <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Register</ion-button>
+    <ion-button [routerLink]="['/login']">Back</ion-button>
   </form>
 </ion-content>
