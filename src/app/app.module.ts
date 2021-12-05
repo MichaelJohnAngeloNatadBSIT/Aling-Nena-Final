@@ -22,9 +22,10 @@ import { environment } from '../environments/environment';
 
 
 import { HttpClientModule } from '@angular/common/http';
-
+// import { FileSizePipe } from './file-size.pipe';
+// FileSizePipe
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,],
   entryComponents: [],
   imports: [HttpClientModule, 
     BrowserModule, IonicModule.forRoot(), 

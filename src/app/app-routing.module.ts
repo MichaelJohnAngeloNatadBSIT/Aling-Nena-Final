@@ -20,6 +20,11 @@ const routes: Routes = [
     canLoad: [AuthGuard] // Secure all child pages
   },
   {
+    path: 'tab1',
+    loadChildren: () => import('./tab1/tab1.module').then(m => m.Tab1PageModule),
+    canLoad: [AuthGuard] // Secure all child pages
+  },
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -27,7 +32,8 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
-  },  {
+  },
+  {
     path: 'cart-modal',
     loadChildren: () => import('./cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
   }

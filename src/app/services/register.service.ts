@@ -5,6 +5,7 @@ import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User } from "./shared/user";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
  
 import { Storage } from '@capacitor/storage';
 
@@ -21,7 +22,8 @@ export class RegisterService {
  
   constructor(
     private http: HttpClient, 
-    public afStore: AngularFirestore) {
+    public afStore: AngularFirestore,
+    public ngFireAuth: AngularFireAuth,) {
     this.loadToken();
   }
  
@@ -36,21 +38,32 @@ export class RegisterService {
     }
   }
  
-  register(credentials: {email, password}): Observable<any> {
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=`+environment.firebase.apiKey, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap(token => {
-        return from(Storage.set({key: TOKEN_KEY, value: token}));
-      }),
-      tap(_ => {
-        this.isAuthenticated.next(true);
-      })
-    )
+  // register(credentials: {email, password}): Observable<any> {
+  //   return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=`+environment.firebase.apiKey, credentials).pipe(
+  //     map((data: any) => data.token),
+  //     switchMap(token => {
+  //       return from(Storage.set({key: TOKEN_KEY, value: token}));
+  //     }),
+  //     tap(_ => {
+  //       this.isAuthenticated.next(true);
+  //     })
+  //   )
+  // }
+
+  register(credentials: {email, password}) {
+    return new Promise<any>((resolve, reject) => {
+      this.ngFireAuth.createUserWithEmailAndPassword(credentials.email, credentials.password)
+        .then(
+          res => resolve(res),
+          err => reject(err))
+
+          this.isAuthenticated.next(true);
+    })
   }
 
   // Store user in localStorage
   SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`usersInfo/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -65,6 +78,7 @@ export class RegisterService {
  
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
+    this.ngFireAuth.signOut();
     return Storage.remove({key: TOKEN_KEY});
   }
 }

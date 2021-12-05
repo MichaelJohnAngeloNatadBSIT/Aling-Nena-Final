@@ -24,7 +24,8 @@ export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
  
-  constructor(private http: HttpClient, 
+  constructor(
+    private http: HttpClient, 
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth,
     public router: Router,  
@@ -54,18 +55,34 @@ export class AuthenticationService {
     }
   }
 
-  login(credentials: {email, password}): Observable<any> {
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=`+environment.firebase.apiKey, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap(token => {
-        return from(Storage.set({key: TOKEN_KEY, value: token}));
-      }),
-      tap(_ => {
-        this.isAuthenticated.next(true);
-      })
-    )
+  login(credentials: {email, password}) {
+    return new Promise<any>((resolve, reject) => {
+      this.ngFireAuth.signInWithEmailAndPassword(credentials.email, credentials.password)
+        .then(
+          res => resolve(res),
+          err => reject(err))
+
+          this.isAuthenticated.next(true);
+    })
   }
 
+  // login(credentials: {email, password}): Observable<any> {
+  //   return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=`+environment.firebase.apiKey, credentials).pipe(
+  //     map((data: any) => data.token),
+  //     switchMap(token => {
+  //       return from(Storage.set({key: TOKEN_KEY, value: token}));
+  //     }),
+  //     tap(_ => {
+  //       this.isAuthenticated.next(true);
+  //     })
+  //   )
+  // }
+
+  // Sign in with Facebook
+  FacebookAuth() {
+    this.isAuthenticated.next(true);
+    return this.AuthLogin(new firebase.auth.FacebookAuthProvider());
+  }  
 
 
   // Sign in with Gmail
@@ -89,7 +106,7 @@ export class AuthenticationService {
 
   // Store user in localStorage
   SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`usersInfo/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -102,10 +119,17 @@ export class AuthenticationService {
     })
   }
 
- 
+  userDetails() {
+    return this.ngFireAuth.user;
+  }
+
+  getUser(email: string) {
+    return this.afStore.collection('usersInfo').doc(email).get();
+ }
  
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
+    this.ngFireAuth.signOut();
     return Storage.remove({key: TOKEN_KEY});
   }
 }

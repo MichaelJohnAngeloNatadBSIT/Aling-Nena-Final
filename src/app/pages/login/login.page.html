@@ -16,7 +16,9 @@
         <span *ngIf="email.errors?.email">Email is invalid</span>
       </div>
       <ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+        <app-show-hide-password>
+          <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+        </app-show-hide-password>
       </ion-item>
       <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
         <span *ngIf="password.errors?.required">Password is required</span>
@@ -32,10 +34,7 @@
       <ion-icon name="logo-google" slot="start"></ion-icon>
       Sign in with Google
     </ion-button>
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-apple" slot="start"></ion-icon>
-      Sign in with Apple
-    </ion-button>
+    
   </form>
 
   <!-- <form>    
