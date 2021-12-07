@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
+  },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('../update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
   }
 ];
 

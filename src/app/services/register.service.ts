@@ -38,27 +38,16 @@ export class RegisterService {
     }
   }
  
-  // register(credentials: {email, password}): Observable<any> {
-  //   return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=`+environment.firebase.apiKey, credentials).pipe(
-  //     map((data: any) => data.token),
-  //     switchMap(token => {
-  //       return from(Storage.set({key: TOKEN_KEY, value: token}));
-  //     }),
-  //     tap(_ => {
-  //       this.isAuthenticated.next(true);
-  //     })
-  //   )
-  // }
-
-  register(credentials: {email, password}) {
-    return new Promise<any>((resolve, reject) => {
-      this.ngFireAuth.createUserWithEmailAndPassword(credentials.email, credentials.password)
-        .then(
-          res => resolve(res),
-          err => reject(err))
-
-          this.isAuthenticated.next(true);
-    })
+  register(credentials: {email, password}): Observable<any> {
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=`+environment.firebase.apiKey, credentials).pipe(
+      map((data: any) => data.token),
+      switchMap(token => {
+        return from(Storage.set({key: TOKEN_KEY, value: token}));
+      }),
+      tap(_ => {
+        this.isAuthenticated.next(true);
+      })
+    )
   }
 
   // Store user in localStorage

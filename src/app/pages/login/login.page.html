@@ -1,11 +1,8 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Authentication App</ion-title>
-  </ion-toolbar>
-</ion-header>
- 
 <ion-content>
- 
+  <div class="img-logo">
+    <img src="../../../assets/icon/aling-nena-logo.png" class="logo">
+  </div>
+  
   <form (ngSubmit)="login()" [formGroup]="credentials">
     <div class="input-group">
       <ion-item>
@@ -27,7 +24,8 @@
     </div>
  
     <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" [routerLink]="['/signup']" expand="block" color="light" fill="clear">Not yet a member? Sign up!
+    <ion-button type="button" [routerLink]="['/signup']" expand="block" color="secondary">
+      Not yet a member? Sign up!
     </ion-button>
  
     <ion-button type="button" expand="block" color="tertiary" (click)="authService.GoogleAuth()">
