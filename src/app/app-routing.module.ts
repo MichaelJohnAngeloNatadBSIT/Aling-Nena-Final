@@ -36,10 +36,27 @@ const routes: Routes = [
   {
     path: 'cart-modal',
     loadChildren: () => import('./cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
-  },  {
+  },
+  {
     path: 'update-profile',
     loadChildren: () => import('./update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
+  },
+  {
+    path: 'upload-food',
+    loadChildren: () => import('./upload-food/upload-food.module').then( m => m.UploadFoodPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'edit-food/:id',
+    loadChildren: () => import('./edit-food/edit-food.module').then( m => m.EditFoodPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'posted-food',
+    loadChildren: () => import('./posted-food/posted-food.module').then( m => m.PostedFoodPageModule),
+    canLoad: [AuthGuard]
   }
+
 
 
 ];

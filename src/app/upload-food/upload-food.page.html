@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar class="ios hydrated">
+    <ion-title class="ios title-ios hydrated">Post Food</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <form [formGroup]="foodForm" (ngSubmit)="formSubmit()">
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input formControlName="name" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Stocks</ion-label>
+        <ion-input formControlName="stocks" type="text" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" shape="full" expand="block">Post Food</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-list>
+  <button [routerLink]="['/tab1']" routerLinkActive="router-link-active">Back</button>
+</ion-content>

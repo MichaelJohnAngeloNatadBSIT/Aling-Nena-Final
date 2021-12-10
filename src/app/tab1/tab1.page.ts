@@ -116,6 +116,18 @@ async UpdateProfile(userName: string, imgPath: string, userEmail: string) {
     this.navCtrl.navigateForward(['update-profile'])
   }
 
+  uploadFood(){
+    this.navCtrl.navigateForward(['upload-food'])
+  }
+
+  postedFood(){
+    this.navCtrl.navigateForward(['posted-food'])
+  }
+
+  editFood(){
+    this.navCtrl.navigateForward(['edit-food/:id'])
+  }
+
   userDetails() {
     return this.ngFireAuth.user;
   }
