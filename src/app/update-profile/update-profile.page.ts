@@ -89,69 +89,13 @@ export class UpdateProfilePage implements OnInit {
   }
   
 
-  // async register(fileUrl) {
-  //   const loading = await this.loadingController.create();
-  //   await loading.present();
-
-  //   console.log("imgPath: "+fileUrl);
-    
-  //   this.regService.register(this.credentials.value).subscribe(
-  //     async (res) => {
-  //       await loading.dismiss(); 
-  //       this.SetUserData(this.credentials.value, fileUrl);
-  //       console.log(this.credentials.value);
-  //       console.log("imgPath: "+this.imgPath);
-  //       this.router.navigateByUrl('/tabs', { replaceUrl: true });
-  //     },
-  //     async (res) => {
-  //       await loading.dismiss();
-  //       const alert = await this.alertController.create({
-  //         header: 'Register failed',
-  //         message: res.error.error,
-  //         buttons: ['OK'],
-  //       });
- 
-  //       await alert.present();
-  //     }
-  //   );
-  // }
-
-  // SetUserData(credentials, imgPath) {
-  //   const id = this.afStore.createId();
-  //   const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`usersInfo/${credentials.email}`);
-  //   const userData: UserInfo = {
-  //     uid: id,
-  //     email: credentials.email,
-  //     name: credentials.name,
-  //     address: credentials.address,
-  //     imagePath: imgPath
-  //   }
-  //   return userRef.set(userData, {
-  //     merge: true
-  //   })
-  // }
-
-  
-  // Easy access for form fields
-  // get email() {
-  //   return this.credentials.get('email');
-  // }
-  
-  // get password() {
-  //   return this.credentials.get('password');
-  // }
-
   get fullName() {
     return this.credentials.get('fullName');
   }
 
-  // get address() {
-  //   return this.credentials.get('address');
-  // }
-  // userName: string
   async UpdateProfile(credentials, imgPath: string, userEmail: string) {
-    console.log(credentials);
-    console.log("The Update is Successful")
+    // console.log(credentials);
+    console.log("The Update is Successful");
     const profile = {
        displayName: credentials.fullName,
        photoURL: imgPath,
@@ -185,6 +129,7 @@ export class UpdateProfilePage implements OnInit {
       
       finalize(() => {
         this.fileUploadedPath = imageRef.getDownloadURL();
+
         this.fileUploadedPath.subscribe(resp=>{
           
           this.UpdateProfile(this.credentials.value, resp, this.userEmail);
