@@ -62,7 +62,7 @@ export class UploadFoodPage implements OnInit {
     this.isImgUploading = false;
     this.isImgUploaded = false;
 
-    this.ngFirestoreCollection = afs.collection<FILE>('foodProducts');
+    this.ngFirestoreCollection = afs.collection<FILE>('products');
     this.files = this.ngFirestoreCollection.valueChanges();
    }
 
