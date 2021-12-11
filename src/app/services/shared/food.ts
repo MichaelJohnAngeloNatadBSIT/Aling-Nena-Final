@@ -1,6 +1,9 @@
 export class food {
     $key: string;
-    name: string;
-    stocks: number;
+    title: string;
+    price: number;
+    description: string;
+    category: string;
+    stock: number;
     img: string;
 }

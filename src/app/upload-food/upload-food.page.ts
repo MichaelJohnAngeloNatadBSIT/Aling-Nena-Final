@@ -7,11 +7,15 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
+import { title } from 'process';
 
 export interface FILE {
-  name: string;
-  filepath: string;
-  size: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  stock: number;
 }
 
 
@@ -58,61 +62,19 @@ export class UploadFoodPage implements OnInit {
     this.isImgUploading = false;
     this.isImgUploaded = false;
 
-    this.ngFirestoreCollection = afs.collection<FILE>('foodImageCollection');
+    this.ngFirestoreCollection = afs.collection<FILE>('foodProducts');
     this.files = this.ngFirestoreCollection.valueChanges();
    }
 
   ngOnInit() {
     this.foodForm = this.fb.group({
-      name:[''],
-      stocks:[''],
+      title:[''],
+      price:[''],
+      description:[''],
+      category:[''],
+      stock:[''],
     })
   }
-
-  // imageUpload(event: FileList){
-  //   const file = event.item(0)
-  //   // console.log(file);
-  //   if (file.type.split('/')[0] !== 'image') { 
-  //     console.log('File type is not supported!')
-  //     return;
-  //   }
-
-  //   this.FileName = file.name;
-
-  //   const fileStoragePath = `foodImages/${new Date().getTime()}_${file.name}`;
-
-  //   const imageRef = this.afStorage.ref(fileStoragePath);
-
-  //   this.ngFireUploadTask = this.afStorage.upload(fileStoragePath, file);
-
-  //   this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
-  //     finalize(() => {
-  //       this.fileUploadedPath = imageRef.getDownloadURL();
-
-  //       this.fileUploadedPath.subscribe(resp=>{
-          
-  //         // this.UpdateProfile(this.credentials.value, resp, this.userEmail);
-
-  //         // this.navCtrl.navigateBack(['/tabs']);
-  //         this.fileStorage({
-  //           name: file.name,
-  //           filepath: resp,
-  //           size: this.FileSize,
-  //         });
-  //         // this.isImgUploading = false;
-  //         // this.isImgUploaded = true;
-  //         console.log(resp);
-  //         this.formSubmit(resp);
-  //       },error => {
-  //         console.log(error);
-  //       })
-  //   }),
-  //   tap(snap => {
-  //       this.FileSize = snap.totalBytes;
-  //   })
-  //   )
-   
-  // }
 
   uploadImage(event: FileList) {
       
@@ -143,13 +105,6 @@ export class UploadFoodPage implements OnInit {
         this.fileUploadedPath.subscribe(resp=>{
           console.log(resp);
         
-
-          // this.navCtrl.navigateBack(['/posted-food']);
-          this.fileStorage({
-            name: file.name,
-            filepath: resp,
-            size: this.FileSize,
-          });
           this.isImgUploading = false;
           this.isImgUploaded = true;
         },error => {
@@ -172,12 +127,29 @@ export class UploadFoodPage implements OnInit {
     });
   }  
 
+  foodFileStorage(food: FILE, img: string) {
+    const foodID = this.afs.createId();
+    
+    this.ngFirestoreCollection.doc(foodID).set({
+      title: food.title,
+      price: food.price,
+      description: food.description,
+      category: food.category,
+      image: img,
+      stock: food.stock,
+    }).then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    });
+  }  
+
   formSubmit(image) {
     if (!this.foodForm.valid) {
       return false;
     } else {
         this.foodService.createFood(this.foodForm.value, image).then(res => {
-          console.log(res)
+          this.foodFileStorage(this.foodForm.value, image);
           this.foodForm.reset();
           this.router.navigate(['/posted-food']);
         })

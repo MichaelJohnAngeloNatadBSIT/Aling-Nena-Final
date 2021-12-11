@@ -13,12 +13,15 @@ export class FoodsService {
     this.foodListRef = db.list('/foodListRef');
   }
 
-  
+  // , image: string
   // Create
   createFood(apt: food, image: string) {
     return this.foodListRef.push({
-      name: apt.name,
-      stocks: apt.stocks,
+      title: apt.title,
+      price: apt.price,
+      description: apt.description,
+      category: apt.category,
+      stock: apt.stock,
       img: image
     })
   }
@@ -38,8 +41,11 @@ export class FoodsService {
   // Update
   updateFood(id, apt: food, image:string) {
     return this.foodRef.update({
-      name: apt.name,
-      stocks: apt.stocks,
+      title: apt.title,
+      price: apt.price,
+      description: apt.description,
+      category: apt.category,
+      stock: apt.stock,
       img: image
     })
   }
