@@ -5,6 +5,7 @@ import firebase from 'firebase/compat/app';
 import { BehaviorSubject } from 'rxjs';
 
 
+
 const CART_STORAGE_KEY = 'MY_CART';
 
  
@@ -71,7 +72,7 @@ export class ProductService {
     // Update the FB cart
     this.afs.collection('carts').doc(this.cartKey).update({
       [id]: INCREMENT,
-      lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+      lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
     });
    
     // Update the stock value of the product

@@ -16,7 +16,11 @@ export class Tab2Page implements OnInit, AfterViewInit {
   cart = {};
   cartAnimation: Animation;
  
-  constructor(private productService: ProductService, private animationCtrl: AnimationController, private modalCtrl: ModalController) {}
+  constructor(
+    private productService: ProductService, 
+    private animationCtrl: AnimationController, 
+    private modalCtrl: ModalController
+    ) {}
  
   ngOnInit() {
     this.products = this.productService.getProducts();
