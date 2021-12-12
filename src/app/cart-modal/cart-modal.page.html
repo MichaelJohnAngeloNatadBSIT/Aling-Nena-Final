@@ -18,7 +18,11 @@
     <ion-label>
       {{ p.title }}
     </ion-label>
- 
+    <ion-label>
+      {{ p.price }}
+    </ion-label>
+
+    
     <ion-avatar slot="end">
       <ion-img [src]="p.image"></ion-img>
     </ion-avatar>
@@ -27,6 +31,9 @@
 </ion-content>
  
 <ion-footer>
+  <ion-label>
+    Total: {{ getTotal() | currency:'₱'}}
+  </ion-label>
   <ion-toolbar color="success">
     <ion-button expand="full" (click)="checkout()" fill="clear" color="light">
       Checkout

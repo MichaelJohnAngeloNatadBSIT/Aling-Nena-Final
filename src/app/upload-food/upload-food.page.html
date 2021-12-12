@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar class="ios hydrated">
     <ion-title class="ios title-ios hydrated">Post Food</ion-title>
+    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +16,7 @@
 
       <ion-item>
         <ion-label position="floating">Price</ion-label>
-        <ion-input formControlName="price" type="text" required>
+        <ion-input formControlName="price" type="number" required>
         </ion-input>
       </ion-item>
 
@@ -33,7 +34,7 @@
 
       <ion-item>
         <ion-label position="floating">Stocks</ion-label>
-        <ion-input formControlName="stock" type="text" required>
+        <ion-input formControlName="stock" type="number" required>
         </ion-input>
       </ion-item>
 
@@ -103,5 +104,4 @@
       
     </form>
   </ion-list>
-  <button [routerLink]="['/tabs']" routerLinkActive="router-link-active">Back</button>
 </ion-content>

@@ -5,6 +5,8 @@ import { ProductService } from '../services/product.service';
 import { take } from 'rxjs/operators';
 
 
+
+
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.page.html',
@@ -27,20 +29,25 @@ export class CartModalPage implements OnInit {
   }
  
   async checkout() {
+    console.log(this.getTotal());
+    this.productService.checkoutCart(this.getTotal());
     const alert = await this.alertCtrl.create({
-      header: 'Success',
-      message: 'Thanks for your order',
+      header: 'Order Preparing....',
+      message: 'The Seller is preparing your order',
       buttons: ['Continue shopping']
     });
  
     await alert.present();
- 
-    this.productService.checkoutCart();
+    
     this.modalCtrl.dismiss();
   }
  
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  getTotal() {
+    return this.products.reduce((i, j) => i + j.price * j.count, 0);
   }
 }
 

@@ -8,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 
 const CART_STORAGE_KEY = 'MY_CART';
 
+
+
  
 const INCREMENT = firebase.firestore.FieldValue.increment(1);
 const DECREMENT = firebase.firestore.FieldValue.increment(-1);
@@ -94,14 +96,17 @@ export class ProductService {
     });
   }
    
-  async checkoutCart() {
+  async checkoutCart(totalAmount) {
     // Create an order
     await this.afs.collection('orders').add(this.cart.value);
-   
+    console.log(this.cart.value);
     // Clear old cart
     this.afs.collection('carts').doc(this.cartKey).set({
-      lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+      // cartValue: this.cart.value,
+      lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+      total: totalAmount
     });
   }
+
 }
 

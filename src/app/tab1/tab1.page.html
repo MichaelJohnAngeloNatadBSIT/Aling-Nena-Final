@@ -22,19 +22,18 @@
 
         <div class="card-body" >
           <div class="user-meta ion-text-center">
-            <h5 class="name">Your Registered EmailID : {{userEmail}}</h5>
-            <h5 class="name">Your Registered Name : {{userName}}</h5>
+            <h5 class="name">{{userEmail}}</h5>
+            <h5 class="name">Username:{{userName}}</h5>
 
          
               <ion-button color="secondary" (click)="updatePage()"><ion-icon name="cloud-upload"></ion-icon>Update Profile</ion-button>
-              
               <ion-button color="secondary" (click)="uploadFood()"><ion-icon name="pizza"></ion-icon>Post Food</ion-button>
-          
+              <ion-button color="secondary" (click)="postedFood()">Your Posted Foods</ion-button>
   
             <ion-button expand="full" color="danger" (click)="logout()">Logout</ion-button>
             
             
-            <ion-button color="secondary" (click)="postedFood()">Posted Food</ion-button>
+            
            
           </div>
         </div>

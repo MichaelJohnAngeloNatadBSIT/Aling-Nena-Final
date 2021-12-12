@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { food } from './shared/food';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
-
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +9,12 @@ export class FoodsService {
   foodListRef: AngularFireList<any>;
   foodRef: AngularFireObject<any>;
 
-  constructor( private db: AngularFireDatabase ) { 
+
+
+  constructor( 
+    private db: AngularFireDatabase,
+    private afs: AngularFirestore
+    ) { 
     this.foodListRef = db.list('/foodListRef');
   }
 
@@ -54,5 +59,8 @@ export class FoodsService {
   deleteFood(id: string) {
     this.foodRef = this.db.object('/foodListRef/' + id);
     this.foodRef.remove();
+
+    this.afs.collection('products').doc(id).delete();
+
   }
 }

@@ -3,6 +3,7 @@
     <ion-title>
       Posted Foods
     </ion-title>
+    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +16,7 @@
     <ion-item *ngFor="let foods of Foods" class="user-list">
       <ion-label>
         <h5>
-          <ion-icon name="pizza"></ion-icon> {{foods.name}}
+          <ion-icon name="pizza"></ion-icon> {{foods.title}}
         </h5>
         <img src="{{ foods.img }}"/>
         <p>
@@ -32,7 +33,7 @@
         </button>
       </div>
     </ion-item>
-    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active">Back</button>
+    
   </ion-list>
 
 
