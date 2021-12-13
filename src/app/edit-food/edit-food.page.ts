@@ -9,10 +9,14 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { FoodsService } from '../services/foods.service';
 
+
 export interface FILE {
-  name: string;
-  filepath: string;
-  size: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  stock: number;
 }
 
 @Component({
@@ -44,6 +48,7 @@ export class EditFoodPage implements OnInit {
 
   // private ngFirestoreCollection: AngularFirestoreCollection<FILE>;
   errorMessage: string = '';
+  private ngFirestoreCollection: AngularFirestoreCollection<FILE>;
 
   constructor(
     private foodService: FoodsService,
@@ -55,6 +60,7 @@ export class EditFoodPage implements OnInit {
     private navCtrl : NavController,
   ) {
     this.id = this.actRoute.snapshot.paramMap.get('id');
+    this.ngFirestoreCollection = afs.collection<FILE>('products');
     this.foodService.getFood(this.id).valueChanges().subscribe(res => {
       this.updateFoodForm.setValue(res);
     });
@@ -62,14 +68,18 @@ export class EditFoodPage implements OnInit {
 
   ngOnInit() {
     this.updateFoodForm = this.fb.group({
-      name: [''],
-      stocks: [''],
-      img: ['']
+      title:[''],
+      price:[''],
+      description:[''],
+      category:[''],
+      stock:[''],
+      img:['']
     })
     console.log(this.updateFoodForm.value)
   }
 
   updateForm(image) {
+    this.foodFileStorage(this.id, this.updateFoodForm.value, image);
     this.foodService.updateFood(this.id, this.updateFoodForm.value, image)
       .then(() => {
         this.router.navigate(['/posted-food']);
@@ -116,6 +126,22 @@ export class EditFoodPage implements OnInit {
       })
     )
   }
+
+  foodFileStorage(id, food: FILE, img: string) {
+    
+    this.ngFirestoreCollection.doc(food.title).update({
+      title: food.title,
+      price: food.price,
+      description: food.description,
+      category: food.category,
+      image: img,
+      stock: food.stock,
+    }).then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    });
+  }  
   
   backBttn(){
 

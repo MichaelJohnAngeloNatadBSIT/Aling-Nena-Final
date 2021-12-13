@@ -3,13 +3,10 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Storage } from '@capacitor/storage';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject } from 'rxjs';
-
+import { take } from 'rxjs/operators';
 
 
 const CART_STORAGE_KEY = 'MY_CART';
-
-
-
  
 const INCREMENT = firebase.firestore.FieldValue.increment(1);
 const DECREMENT = firebase.firestore.FieldValue.increment(-1);
@@ -20,25 +17,37 @@ const DECREMENT = firebase.firestore.FieldValue.increment(-1);
 
 
 export class ProductService {
+
   
   cart = new BehaviorSubject({});
   cartKey = null;
   productsCollection: AngularFirestoreCollection;
+  ordersCollection: AngularFirestoreCollection;
  
   constructor(private afs: AngularFirestore ) {
     this.loadCart();
     this.productsCollection = this.afs.collection('products');
+    this.ordersCollection = this.afs.collection('orders');
+    console.log(this.cartKey);
   }
  
   getProducts() {
     return this.productsCollection.valueChanges({ idField: 'id' });
   }
+
+  getOrders(){
+    
+    return this.ordersCollection.valueChanges({ idField: 'id' });
+
+  }
  
   async loadCart() {
 
     const result = await Storage.get({ key: CART_STORAGE_KEY });
+    
     if (result.value) {
       this.cartKey = result.value;
+      // const ordersCollection = this.afs.collection(`orders/${this.cartKey}`).valueChanges(); 
       
       this.afs.collection('carts').doc(this.cartKey).valueChanges().subscribe((result: any) => {
         // Filter out our timestamp
@@ -96,9 +105,13 @@ export class ProductService {
     });
   }
    
-  async checkoutCart(totalAmount) {
-    // Create an order
-    await this.afs.collection('orders').add(this.cart.value);
+  async checkoutCart(totalAmount, products:any) {
+    // Create an order this.cart.value
+    console.log(products);
+    await this.afs.collection('orders').add({
+      ...products
+    }
+    );
     console.log(this.cart.value);
     // Clear old cart
     this.afs.collection('carts').doc(this.cartKey).set({

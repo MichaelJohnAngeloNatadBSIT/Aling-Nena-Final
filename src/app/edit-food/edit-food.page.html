@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       Edit Posted Food
     </ion-title>
@@ -9,15 +9,30 @@
 
 <ion-content>
   <ion-list lines="full">
+    
     <form [formGroup]="updateFoodForm">
+      <ion-input formControlName="title" disabled></ion-input>
       <ion-item>
-        <ion-label position="floating">Name</ion-label>
-        <ion-input formControlName="name" type="text" required></ion-input>
+        <ion-label position="floating">Price</ion-label>
+        <ion-input formControlName="price" type="number" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input formControlName="description" type="text" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+        <ion-input formControlName="category" type="text" required>
+        </ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Stocks</ion-label>
-        <ion-input formControlName="stocks" type="text" required>
+        <ion-input formControlName="stock" type="number" required>
         </ion-input>
       </ion-item>
 

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Shop
+      Ulams
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,35 +10,28 @@
  
   <ion-list>
     <ion-item *ngFor="let p of products | async" (click)="p.expanded = !p.expanded">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="p.image"></ion-img>
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">
-        {{ p.title }}<br>
-        <b>{{ p.price | currency:'USD' }}</b>
-        <p>{{ p.stock }} left</p>
-        <div [hidden]="!p.expanded">
-          {{ p.description }}
-        </div>
-      </ion-label>
-      <ion-row slot="end" class="ion-no-padding ion-align-items-center">
-        <ion-col size="5">
-          <ion-button (click)="addToCart($event, p)" fill="clear">
-            <ion-icon name="add" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
- 
-        <ion-col size="2">
-          {{ cart[p.id] || 0 }}
-        </ion-col>
- 
-        <ion-col size="5">
-          <ion-button (click)="removeFromCart($event, p)" fill="clear" [disabled]="!cart[p.id] || cart[p.id] == 0">
-            <ion-icon name="remove" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
- 
+
+      <div class="card-align">
+        <ion-card>
+          <ion-img [src]="p.image" class="rand-img"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{ p.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label class="ion-text-wrap">
+                {{ p.title }}<br>
+                <b>{{ p.price | currency:'₱' }}</b>
+                <p>{{ p.stock }} left</p>
+                <div [hidden]="!p.expanded">
+                  {{ p.description }}
+                </div>
+              </ion-label>
+              <br/>
+              <ion-button color="primary" (click)="addToCart($event, p)"><ion-icon name="cart"></ion-icon></ion-button>
+              <ion-button (click)="removeFromCart($event, p)"><ion-icon name="trash"></ion-icon></ion-button>
+            </ion-card-content>
+          </ion-card>
+    </div>
     </ion-item>
   </ion-list>
  

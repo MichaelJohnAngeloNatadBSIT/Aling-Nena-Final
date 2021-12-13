@@ -128,9 +128,9 @@ export class UploadFoodPage implements OnInit {
   }  
 
   foodFileStorage(food: FILE, img: string) {
-    const foodID = this.afs.createId();
+    // const foodID = this.afs.createId();
     
-    this.ngFirestoreCollection.doc(foodID).set({
+    this.ngFirestoreCollection.doc(food.title).set({
       title: food.title,
       price: food.price,
       description: food.description,

@@ -81,7 +81,7 @@ export class SignupPage implements OnInit {
       async (res) => {
         await loading.dismiss(); 
         console.log(this.credentials.value);
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+        this.router.navigateByUrl('/login', { replaceUrl: true });
       },
       async (res) => {
         await loading.dismiss();

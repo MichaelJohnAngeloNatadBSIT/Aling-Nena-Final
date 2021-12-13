@@ -11,7 +11,11 @@ import { FoodsService } from '../services/foods.service';
 export class PostedFoodPage implements OnInit {
   Foods = [];
 
-  constructor( private foodService: FoodsService ) { }
+
+  constructor( 
+    private foodService: FoodsService,
+    ) {
+   }
 
   ngOnInit() {
     this.fetchFoods();

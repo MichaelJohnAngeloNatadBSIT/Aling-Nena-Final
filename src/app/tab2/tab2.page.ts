@@ -64,5 +64,9 @@ export class Tab2Page implements OnInit, AfterViewInit {
     });
     await modal.present();
   }
+  
+  // testProd(){
+  //   this.productService.getOrders();
+  // }
 
 }

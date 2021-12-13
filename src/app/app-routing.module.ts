@@ -20,8 +20,19 @@ const routes: Routes = [
     canLoad: [AuthGuard] // Secure all child pages
   },
   {
+    path: 'tabs/:orderObject',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canLoad: [AuthGuard] // Secure all child pages
+  },
+  {
     path: 'tab1',
     loadChildren: () => import('./tab1/tab1.module').then(m => m.Tab1PageModule),
+    canLoad: [AuthGuard] // Secure all child pages
+  },
+
+  {
+    path: 'tab3/:orderObject',
+    loadChildren: () => import('./tab3/tab3.module').then(m => m.Tab3PageModule),
     canLoad: [AuthGuard] // Secure all child pages
   },
   {

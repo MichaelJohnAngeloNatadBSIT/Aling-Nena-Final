@@ -65,9 +65,7 @@ export class Tab1Page implements OnInit {
   
 
   ngOnInit() {
-
     this.authService.userDetails().subscribe(res => {
-      console.log('res', res);
       if (res !== null) {
         this.userEmail = res.email;
         this.userName = res.displayName;
@@ -81,9 +79,7 @@ export class Tab1Page implements OnInit {
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
     this.authService.userDetails().subscribe(res => {
-      console.log('res', res);
       if (res !== null) {
         this.userEmail = res.email;
         this.userName = res.displayName;
@@ -92,18 +88,15 @@ export class Tab1Page implements OnInit {
         this.navCtrl.navigateBack('');
       }
     }, err => {
-      console.log('err', err);
     })
 
     setTimeout(() => {
-      console.log('Async operation has ended');
       event.target.complete();
     }, 1000);
   }
 
 
 async UpdateProfile(userName: string, imgPath: string, userEmail: string) {
-  console.log("The Update is Successful")
   const profile = {
      displayName: userName,
      photoURL: imgPath,

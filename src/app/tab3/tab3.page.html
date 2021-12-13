@@ -1,17 +1,88 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Tab 3
+      Orders
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header translucent>
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-segment [(ngModel)]="selectTabs">
+        <ion-segment-button value="preparing">
+          <ion-label>Preparing</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="on-the-way">
+          <ion-label>On The Way</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="delivered">
+          <ion-label>Delivered</ion-label>
+        </ion-segment-button>
+      </ion-segment>
     </ion-toolbar>
   </ion-header>
+  <div *ngIf="selectTabs == 'preparing'">
+  <ion-list *ngFor="let p of orders | async">
+    <div class="card-align">
+        <ion-card>
+          <ion-img [src]="p.image" class="rand-img"></ion-img>
+            <ion-card-header>
+              <ion-card-title>Your Order is being processed</ion-card-title>
+              <h2>Your Order ID: {{ p.id}}</h2>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label color="secondary">
+                <b></b>
+              </ion-label>
+              <br/>
+            </ion-card-content>
+          </ion-card>
+    </div>
+  </ion-list>
+</div>  
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    <div *ngIf="selectTabs == 'on-the-way'">
+      <ion-list *ngFor="let p of favorites">
+        <div class="card-align">
+            <ion-card>
+              <img src="{{ p.img }}" class="rand-img"/>
+                <ion-card-header>
+                  <ion-card-title>{{ p.name }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-label color="secondary">
+                    <b></b>
+                  </ion-label>
+                  <br/>
+                  <ion-button color="primary" (click)="addToCart(p)"><ion-icon name="cart"></ion-icon></ion-button>
+                  <ion-button style="--background:pink"><ion-icon name="heart-outline"></ion-icon></ion-button>
+                  <ion-button color="secondary"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+                </ion-card-content>
+              </ion-card>
+        </div>
+      </ion-list>
+    </div>  
+
+        <div *ngIf="selectTabs == 'delivered'">
+          <ion-list *ngFor="let p of orders">
+            <div class="card-align">
+                <ion-card>
+                  <img src="{{ p.img }}" class="rand-img"/>
+                    <ion-card-header>
+                      <ion-card-title>{{ p.total }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-label color="secondary">
+                        <b></b>
+                      </ion-label>
+                      <br/>
+                      <ion-button color="primary" (click)="addToCart(p)"><ion-icon name="cart"></ion-icon></ion-button>
+                      <ion-button style="--background:pink"><ion-icon name="heart-outline"></ion-icon></ion-button>
+                      <ion-button color="secondary"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+                    </ion-card-content>
+                  </ion-card>
+            </div>   
+          </ion-list>
+        </div>  
 </ion-content>
