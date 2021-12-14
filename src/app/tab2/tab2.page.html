@@ -19,7 +19,6 @@
             </ion-card-header>
             <ion-card-content>
               <ion-label class="ion-text-wrap">
-                {{ p.title }}<br>
                 <b>{{ p.price | currency:'₱' }}</b>
                 <p>{{ p.stock }} left</p>
                 <div [hidden]="!p.expanded">

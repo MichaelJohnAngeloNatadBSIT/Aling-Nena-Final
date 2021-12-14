@@ -14,8 +14,8 @@ export class PostedFoodPage implements OnInit {
 
   constructor( 
     private foodService: FoodsService,
-    ) {
-   }
+    ) 
+    {}
 
   ngOnInit() {
     this.fetchFoods();

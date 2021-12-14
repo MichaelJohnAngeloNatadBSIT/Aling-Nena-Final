@@ -53,11 +53,8 @@ export class UploadFoodPage implements OnInit {
     private router: Router,
     public fb: FormBuilder,
     private afStorage: AngularFireStorage, 
-    // private authService: AuthenticationService, 
-    // private router: Router, 
     private afs: AngularFirestore, 
     private navCtrl: NavController,
-    // public ngFireAuth: AngularFireAuth,
   ) {
     this.isImgUploading = false;
     this.isImgUploaded = false;
@@ -128,7 +125,6 @@ export class UploadFoodPage implements OnInit {
   }  
 
   foodFileStorage(food: FILE, img: string) {
-    // const foodID = this.afs.createId();
     
     this.ngFirestoreCollection.doc(food.title).set({
       title: food.title,
