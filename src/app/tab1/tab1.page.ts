@@ -121,6 +121,10 @@ async UpdateProfile(userName: string, imgPath: string, userEmail: string) {
     this.navCtrl.navigateForward(['edit-food/:id'])
   }
 
+  orders(){
+    this.navCtrl.navigateForward(['orders'])
+  }
+
   userDetails() {
     return this.ngFireAuth.user;
   }

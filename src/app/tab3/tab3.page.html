@@ -22,11 +22,11 @@
       </ion-segment>
     </ion-toolbar>
   </ion-header>
+
   <div *ngIf="selectTabs == 'preparing'">
   <ion-list *ngFor="let p of orders | async">
     <div class="card-align">
         <ion-card>
-          <ion-img [src]="p.image" class="rand-img"></ion-img>
             <ion-card-header>
               <ion-card-title>Your Order is being processed</ion-card-title>
               <h2>Your Order ID: {{ p.id}}</h2>
@@ -43,46 +43,36 @@
 </div>  
 
     <div *ngIf="selectTabs == 'on-the-way'">
-      <ion-list *ngFor="let p of favorites">
+      <ion-list *ngFor="let o of onTheWay | async">
         <div class="card-align">
             <ion-card>
-              <img src="{{ p.img }}" class="rand-img"/>
                 <ion-card-header>
-                  <ion-card-title>{{ p.name }}</ion-card-title>
+                  <ion-card-title>Your Order is on the Way</ion-card-title>
+                  <h2>Your Order ID: {{o.id}}</h2>
                 </ion-card-header>
                 <ion-card-content>
-                  <ion-label color="secondary">
-                    <b></b>
-                  </ion-label>
+                  <ion-button color="primary" (click)="receiveStatus($event, o)"><ion-icon name="arrow-up"></ion-icon>Received</ion-button>
                   <br/>
-                  <ion-button color="primary" (click)="addToCart(p)"><ion-icon name="cart"></ion-icon></ion-button>
-                  <ion-button style="--background:pink"><ion-icon name="heart-outline"></ion-icon></ion-button>
-                  <ion-button color="secondary"><ion-icon name="share-social-outline"></ion-icon></ion-button>
                 </ion-card-content>
               </ion-card>
-        </div>
-      </ion-list>
-    </div>  
+            </div>
+          </ion-list>
+    </div>
 
         <div *ngIf="selectTabs == 'delivered'">
-          <ion-list *ngFor="let p of orders">
+          <ion-list *ngFor="let r of received | async">
             <div class="card-align">
                 <ion-card>
-                  <img src="{{ p.img }}" class="rand-img"/>
                     <ion-card-header>
-                      <ion-card-title>{{ p.total }}</ion-card-title>
+                      <ion-card-title>Your Order is on the Way</ion-card-title>
+                      <h2>Your Order ID: {{r.id}}</h2>
                     </ion-card-header>
                     <ion-card-content>
-                      <ion-label color="secondary">
-                        <b></b>
-                      </ion-label>
                       <br/>
-                      <ion-button color="primary" (click)="addToCart(p)"><ion-icon name="cart"></ion-icon></ion-button>
-                      <ion-button style="--background:pink"><ion-icon name="heart-outline"></ion-icon></ion-button>
-                      <ion-button color="secondary"><ion-icon name="share-social-outline"></ion-icon></ion-button>
                     </ion-card-content>
                   </ion-card>
-            </div>   
-          </ion-list>
+                </div>
+              </ion-list>
+         
         </div>  
 </ion-content>

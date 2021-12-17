@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Orders</ion-title>
+    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
+  </ion-toolbar>
+</ion-header>
+<!-- | async -->
+
+<ion-content>
+  <ion-list *ngFor="let p of orders | async">
+    <div class="card-align">
+        <ion-card>
+          <ion-img [src]="p.image" class="rand-img"></ion-img>
+            <ion-card-header>
+              <ion-card-title>Your Order is being processed</ion-card-title>
+              <h2>Your Order ID: {{p.id}}</h2>
+            <ion-button color="primary" (click)="updateStatus($event, p)"><ion-icon name="arrow-up"></ion-icon>On the Way</ion-button>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label color="secondary">
+                <b></b>
+              </ion-label>
+              <br/>
+            </ion-card-content>
+          </ion-card>
+    </div>
+  </ion-list>
+</ion-content>

@@ -66,7 +66,11 @@ const routes: Routes = [
     path: 'posted-food',
     loadChildren: () => import('./posted-food/posted-food.module').then( m => m.PostedFoodPageModule),
     canLoad: [AuthGuard]
+  },  {
+    path: 'orders',
+    loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
   }
+
 
 
 

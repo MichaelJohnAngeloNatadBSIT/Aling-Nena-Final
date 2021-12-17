@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Storage } from '@capacitor/storage';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { orders } from './shared/orders';
 
 
 const CART_STORAGE_KEY = 'MY_CART';
@@ -23,12 +25,17 @@ export class ProductService {
   cartKey = null;
   productsCollection: AngularFirestoreCollection;
   ordersCollection: AngularFirestoreCollection;
+  onTheWayCollection: AngularFirestoreCollection;
+  receivedCollection: AngularFirestoreCollection;
+
  
   constructor(private afs: AngularFirestore ) {
     this.loadCart();
     this.productsCollection = this.afs.collection('products');
     this.ordersCollection = this.afs.collection('orders');
-    console.log(this.cartKey);
+    this.onTheWayCollection = this.afs.collection('onTheWay');
+    this.receivedCollection = this.afs.collection('received');
+    
   }
  
   getProducts() {
@@ -36,9 +43,15 @@ export class ProductService {
   }
 
   getOrders(){
-    
     return this.ordersCollection.valueChanges({ idField: 'id' });
+  }
 
+  getOnTheWay(){
+    return this.onTheWayCollection.valueChanges({ idField: 'id' });
+  }
+
+  getReceived(){
+    return this.receivedCollection.valueChanges({ idField: 'id' });
   }
  
   async loadCart() {
@@ -47,7 +60,6 @@ export class ProductService {
     
     if (result.value) {
       this.cartKey = result.value;
-      // const ordersCollection = this.afs.collection(`orders/${this.cartKey}`).valueChanges(); 
       
       this.afs.collection('carts').doc(this.cartKey).valueChanges().subscribe((result: any) => {
         // Filter out our timestamp
@@ -78,7 +90,6 @@ export class ProductService {
 
   
   addToCart(id) {
-    // console.log(id);
     
     // Update the FB cart
     this.afs.collection('carts').doc(this.cartKey).update({
@@ -105,13 +116,12 @@ export class ProductService {
     });
   }
    
-  async checkoutCart(totalAmount, products:any) {
+  async checkoutCart(totalAmount, products: any) {
     // Create an order this.cart.value
-    console.log(products);
+    console.log(...products);
     await this.afs.collection('orders').add({
       ...products
-    }
-    );
+    });
     console.log(this.cart.value);
     // Clear old cart
     this.afs.collection('carts').doc(this.cartKey).set({
@@ -120,6 +130,28 @@ export class ProductService {
       total: totalAmount
     });
   }
+
+  async updateStatus(id) {
+    // Create an order this.cart.value
+    // console.log(...products);
+    await this.afs.collection('onTheWay').doc(id).set({
+      id : id
+    });
+
+    this.afs.collection('orders').doc(id).delete();
+  }
+
+  async receiveStatus(id) {
+    // Create an order this.cart.value
+    // console.log(...products);
+    await this.afs.collection('recieved').doc(id).set({
+      id : id
+    });
+
+    this.afs.collection('onTheWay').doc(id).delete();
+  }
+
+
 
 }
 

@@ -3,47 +3,37 @@ import { ProductService } from '../services/product.service';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {ActivatedRoute} from '@angular/router';
+// import { order } from '../services/shared/order';
+
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'app-orders',
+  templateUrl: './orders.page.html',
+  styleUrls: ['./orders.page.scss'],
 })
-export class Tab3Page implements OnInit {
-
-  ordersData = [];
+export class OrdersPage implements OnInit {
+ 
+  ordersData : any;
   selectTabs: string = "preparing";
   testData: any[];
   orders: Observable<any[]>;
-  onTheWay: Observable<any[]>;
-  received: Observable<any[]>;
-
-
 
   constructor(
     private productService: ProductService,
     private afs: AngularFirestore,
     public route:ActivatedRoute
-  ) {
-
-  }
-
-
+  ) { }
 
   ngOnInit() {
 
+
     this.orders = this.productService.getOrders();
+    console.log(this.orders);
 
-    this.onTheWay = this.productService.getOnTheWay();
-
-    this.received = this.productService.getReceived();
-
-
-  
   }
 
-  receiveStatus(event, order){
-    this.productService.receiveStatus(order.id);
+  updateStatus(event, order){
+    this.productService.updateStatus(order.id);
   }
 
 
