@@ -18,17 +18,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ComponentModule } from './comp.module';
 
 import { environment } from '../environments/environment';
-// import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-// import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-// import { provideAuth,getAuth } from '@angular/fire/auth';
-// import { provideDatabase,getDatabase } from '@angular/fire/database';
-// import { provideStorage,getStorage } from '@angular/fire/storage';
-// import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 
 import { HttpClientModule } from '@angular/common/http';
-// import { FileSizePipe } from './file-size.pipe';
-// FileSizePipe
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -49,4 +42,3 @@ import { HttpClientModule } from '@angular/common/http';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-// provideFirebaseApp(() => initializeApp(environment.firebase)), provideAnalytics(() => getAnalytics()), provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())

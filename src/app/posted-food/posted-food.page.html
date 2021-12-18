@@ -3,7 +3,7 @@
     <ion-title>
       Posted Foods
     </ion-title>
-    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
+    <ion-button [routerLink]="['/tabs']" slot="start" color="primary"><ion-icon name="arrow-back" ></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -14,63 +14,32 @@
     </ion-list-header>
 
     <ion-item *ngFor="let foods of Foods" class="user-list">
-      <ion-label>
-        <h5>
-          <ion-icon name="pizza"></ion-icon> {{foods.title}}
-        </h5>
-        <img src="{{ foods.img }}"/>
-        <p>
-          <ion-icon name="list"></ion-icon> {{foods.stocks}}
-        </p>
-      </ion-label>
-
-      <div class="item-note" item-end>
-        <button ion-button clear [routerLink]="['/edit-food/', foods.$key]">
-          <ion-icon name="create" style="zoom:2.0"></ion-icon>
-        </button>
-        <button ion-button clear (click)="deleteFood(foods.$key)">
-          <ion-icon name="trash" style="zoom:2.0"></ion-icon>
-        </button>
-      </div>
-    </ion-item>
-    
-  </ion-list>
-
-
-<!-- <ion-router-outlet id="main"></ion-router-outlet>
-<ion-content [fullscreen]="true">
-  <ion-header translucent>
-    <ion-toolbar>
-      <ion-segment [(ngModel)]="selectTabs">
-        <ion-segment-button value="favorites">
-          <ion-label>Favorites</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="prev-orders">
-          <ion-label>Previous Orders</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ion-header>
-  <div *ngIf="selectTabs == 'favorites'">
-  <ion-list *ngFor="let foods of Foods">
-    <div class="card-align">
+      <div class="card-align">
         <ion-card>
-          <img src="{{ foods.img }}" class="rand-img"/>
+          <ion-img [src]="foods.img" class="rand-img"></ion-img>
             <ion-card-header>
-              <ion-card-title>{{ foods.name }}</ion-card-title>
+              <ion-card-title>{{ foods.title}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-label color="secondary">
-                <b></b>
+              <ion-label class="ion-text-wrap">
+                <b>{{ foods.price | currency:'₱' }}</b>
+                <p>{{ foods.stock }} left</p>
+                <p>{{ foods.category }}</p>
+                <p> {{ foods.description }}</p>
               </ion-label>
               <br/>
-              <ion-button color="primary" (click)="addToCart(p)"><ion-icon name="cart"></ion-icon></ion-button>
-              <ion-button style="--background:pink"><ion-icon name="heart-outline"></ion-icon></ion-button>
-              <ion-button color="secondary"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+              <div class="item-note" item-end>
+                <button ion-button clear [routerLink]="['/edit-food/', foods.$key]">
+                  <ion-icon name="create" style="zoom:2.0"></ion-icon>
+                </button>
+                <button ion-button clear (click)="deleteFood(foods.$key)">
+                  <ion-icon name="trash" style="zoom:2.0"></ion-icon>
+                </button>
+              </div>
+            
             </ion-card-content>
           </ion-card>
-    </div>
+      </div>
+    </ion-item>
   </ion-list>
-  </div> -->
-
-  </ion-content>
+</ion-content>

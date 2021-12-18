@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Orders</ion-title>
-    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
+    <ion-button [routerLink]="['/tabs']" slot="start" color="primary"><ion-icon name="arrow-back" ></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 <!-- | async -->
@@ -14,7 +14,6 @@
             <ion-card-header>
               <ion-card-title>Your Order is being processed</ion-card-title>
               <h2>Your Order ID: {{p.id}}</h2>
-            <ion-button color="primary" (click)="updateStatus($event, p)"><ion-icon name="arrow-up"></ion-icon>On the Way</ion-button>
             </ion-card-header>
             <ion-card-content>
               <ion-label color="secondary">

@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-header translucent>
     <ion-toolbar>
-      <ion-segment [(ngModel)]="selectTabs">
+      <ion-segment [(ngModel)]="selectTabs" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="preparing">
           <ion-label>Preparing</ion-label>
         </ion-segment-button>
@@ -23,7 +23,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="selectTabs == 'preparing'">
+  <div [ngSwitch]="selectTabs">
+  <div *ngSwitchCase ="'preparing'">
   <ion-list *ngFor="let p of orders | async">
     <div class="card-align">
         <ion-card>
@@ -42,7 +43,7 @@
   </ion-list>
 </div>  
 
-    <div *ngIf="selectTabs == 'on-the-way'">
+    <div *ngSwitchCase ="'on-the-way'">
       <ion-list *ngFor="let o of onTheWay | async">
         <div class="card-align">
             <ion-card>
@@ -56,23 +57,82 @@
                 </ion-card-content>
               </ion-card>
             </div>
+        </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'delivered'">
+      <ion-list *ngFor="let r of received | async">
+        <div class="card-align">
+            <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Your Order is on the Way</ion-card-title>
+                  <h2>Your Order ID: {{r.id}}</h2>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-button color="primary" (click)="receiveStatus($event, r)"><ion-icon name="arrow-up"></ion-icon>Received</ion-button>
+                  <br/>
+                </ion-card-content>
+              </ion-card>
+            </div>
           </ion-list>
     </div>
 
-        <div *ngIf="selectTabs == 'delivered'">
-          <ion-list *ngFor="let r of received | async">
-            <div class="card-align">
-                <ion-card>
-                    <ion-card-header>
-                      <ion-card-title>Your Order is on the Way</ion-card-title>
-                      <h2>Your Order ID: {{r.id}}</h2>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <br/>
-                    </ion-card-content>
-                  </ion-card>
-                </div>
-              </ion-list>
-         
-        </div>  
+  </div>
 </ion-content>
+
+<!-- <ion-content class="ion-padding">
+
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-segment [(ngModel)]="segment" scrollable>
+        <ion-segment-button value="first">
+          First
+        </ion-segment-button>
+        <ion-segment-button value="second">
+          Second
+        </ion-segment-button>
+        <ion-segment-button value="third">
+          Three
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div [ngSwitch]="segment">
+    <ion-card *ngSwitchCase="'first'">
+      <ion-card-header>
+        First Content
+      </ion-card-header>
+      <ion-card-content>
+        First Content here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'second'">
+      <ion-card-header>
+        Second Header
+      </ion-card-header>
+      <ion-card-content>
+        Second content here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'third'">
+      <ion-list *ngFor="let r of onTheWay | async">
+        <div class="card-align">
+            <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Your Order is on the Way</ion-card-title>
+                  <h2>Your Order ID: {{r.id}}</h2>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-button color="primary" (click)="receiveStatus($event, r)"><ion-icon name="arrow-up"></ion-icon>Received</ion-button>
+                  <br/>
+                </ion-card-content>
+              </ion-card>
+            </div>
+          </ion-list>
+        </ion-card>
+  </div>
+</ion-content> -->

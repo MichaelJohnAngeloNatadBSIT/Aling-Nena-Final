@@ -25,7 +25,8 @@ export interface FILE {
   styleUrls: ['./edit-food.page.scss'],
 })
 export class EditFoodPage implements OnInit {
-  updateFoodForm: FormGroup;
+  // updateFoodForm: FormGroup;
+  Category: any = ['Ulam/Food', 'Inumin/Beverages', 'Panghimagas/Dessert', 'Sabaw/Soups']
   id: any;
 
   ngFireUploadTask: AngularFireUploadTask;
@@ -67,15 +68,42 @@ export class EditFoodPage implements OnInit {
    }
 
   ngOnInit() {
-    this.updateFoodForm = this.fb.group({
-      title:[''],
-      price:[''],
-      description:[''],
-      category:[''],
-      stock:[''],
-      img:['']
+    
+  }
+
+  updateFoodForm = this.fb.group({
+    title:[''],
+    price:[''],
+    description:[''],
+    category:[''],
+    stock:[''],
+    img:['']
+  })
+
+  changeCategory(e) {
+    console.log(e.value)
+    this.category.setValue(e.target.value, {
+      onlySelf: true
     })
-    console.log(this.updateFoodForm.value)
+  }
+
+  get category(){
+    return this.updateFoodForm.get('category');
+  }
+
+  get title(){
+    return this.updateFoodForm.get('title');
+  }
+
+  get stock(){
+    return this.updateFoodForm.get('stock');
+  }
+
+  get description(){
+    return this.updateFoodForm.get('description');
+  }
+  get price(){
+    return this.updateFoodForm.get('price');
   }
 
   updateForm(image) {

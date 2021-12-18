@@ -1,13 +1,12 @@
 <ion-header>
   <ion-toolbar class="ios hydrated"  color="primary">
     <ion-title class="ios title-ios hydrated">Post Food</ion-title>
-    <button [routerLink]="['/tabs']" routerLinkActive="router-link-active" slot="start" color="secondary">Back</button>
+    <ion-button [routerLink]="['/tabs']" slot="start" color="primary"><ion-icon name="arrow-back" ></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list lines="full">
-    <!-- (ngSubmit)="formSubmit()" -->
     <form [formGroup]="foodForm" >
       <ion-item>
         <ion-label position="floating">Name</ion-label>
@@ -27,9 +26,16 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Category</ion-label>
-        <ion-input formControlName="category" type="text" required>
-        </ion-input>
+        <div class="group-gap">
+          <div class="d-block my-3">
+             <div class="mb-3">
+                <select class="custom-select" (change)="changeCategory($event)" formControlName="category">
+                   <option value="">Category</option>
+                   <option *ngFor="let category of Category" [ngValue]="category">{{category}}</option>
+                </select>
+             </div>
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
@@ -93,15 +99,13 @@
           
           File Size: {{ FileSize | fileSize }}
         </ion-card-content>
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" color="primary" shape="full" expand="block" (click)="formSubmit(fileUrl)">Post Food</ion-button>
+          </ion-col>
+        </ion-row>
       </ion-card>
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" color="primary" shape="full" expand="block" (click)="formSubmit(fileUrl)">Post Food</ion-button>
-        </ion-col>
-      </ion-row>
       </div>
-
-      
     </form>
   </ion-list>
 </ion-content>

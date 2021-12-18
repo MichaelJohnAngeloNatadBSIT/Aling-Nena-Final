@@ -1,0 +1,39 @@
+.my-custom-menu {
+    --width: 500px;
+  }
+  .rand-img {
+    height: 50vh;
+    width: auto;
+    margin: auto;
+    display: block;
+  }
+  
+  .text-header {
+    text-align: center;
+  }
+  .card-align {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  ion-fab-button {
+    height: 70px;
+    width: 70px;
+  }
+  .cart-icon {
+    font-size: 50px;
+  }
+  
+  .cart-length {
+    color: var(--ion-color-primary);
+    position: absolute;
+    top: 18px;
+    left: 25px;
+    font-weight: 600;
+    font-size: 1em;
+    min-width: 25px;
+    z-index: 10;
+  }
+  

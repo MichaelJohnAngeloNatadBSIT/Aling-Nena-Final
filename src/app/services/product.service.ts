@@ -37,6 +37,11 @@ export class ProductService {
     this.receivedCollection = this.afs.collection('received');
     
   }
+  
+  getReceived(){
+    console.log(this.receivedCollection.valueChanges());
+    return this.receivedCollection.valueChanges({ idField: 'id' });
+  }
  
   getProducts() {
     return this.productsCollection.valueChanges({ idField: 'id' });
@@ -50,9 +55,7 @@ export class ProductService {
     return this.onTheWayCollection.valueChanges({ idField: 'id' });
   }
 
-  getReceived(){
-    return this.receivedCollection.valueChanges({ idField: 'id' });
-  }
+ 
  
   async loadCart() {
 
@@ -133,7 +136,7 @@ export class ProductService {
 
   async updateStatus(id) {
     // Create an order this.cart.value
-    // console.log(...products);
+
     await this.afs.collection('onTheWay').doc(id).set({
       id : id
     });
@@ -143,8 +146,7 @@ export class ProductService {
 
   async receiveStatus(id) {
     // Create an order this.cart.value
-    // console.log(...products);
-    await this.afs.collection('recieved').doc(id).set({
+    await this.afs.collection('received').doc(id).set({
       id : id
     });
 

@@ -25,7 +25,11 @@ export interface FILE {
   styleUrls: ['./upload-food.page.scss'],
 })
 export class UploadFoodPage implements OnInit {
-  foodForm: FormGroup;
+
+  // Food Categories
+  Category: any = ['Ulam/Food', 'Inumin/Beverages', 'Panghimagas/Dessert', 'Sabaw/Soups']
+
+  // foodForm: FormGroup;
 
   ngFireUploadTask: AngularFireUploadTask;
 
@@ -64,14 +68,45 @@ export class UploadFoodPage implements OnInit {
    }
 
   ngOnInit() {
-    this.foodForm = this.fb.group({
-      title:[''],
-      price:[''],
-      description:[''],
-      category:[''],
-      stock:[''],
+  // Choose city using select dropdow
+  
+  }
+  foodForm = this.fb.group({
+    title:[''],
+    price:[''],
+    description:[''],
+    category:[''],
+    stock:[''],
+  })
+
+  changeCategory(e) {
+    console.log(e.value)
+    this.category.setValue(e.target.value, {
+      onlySelf: true
     })
   }
+
+  get category(){
+    return this.foodForm.get('category');
+  }
+
+  get title(){
+    return this.foodForm.get('title');
+  }
+
+  get stock(){
+    return this.foodForm.get('stock');
+  }
+
+  get description(){
+    return this.foodForm.get('description');
+  }
+  get price(){
+    return this.foodForm.get('price');
+  }
+
+
+  
 
   uploadImage(event: FileList) {
       
@@ -152,6 +187,8 @@ export class UploadFoodPage implements OnInit {
           .catch(error => console.log(error));
     }
   }
+
+   
 
 
 }

@@ -11,9 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class Tab3Page implements OnInit {
 
-  ordersData = [];
   selectTabs: string = "preparing";
-  testData: any[];
   orders: Observable<any[]>;
   onTheWay: Observable<any[]>;
   received: Observable<any[]>;
@@ -45,7 +43,10 @@ export class Tab3Page implements OnInit {
   receiveStatus(event, order){
     this.productService.receiveStatus(order.id);
   }
-
+  
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
 
 
 }
