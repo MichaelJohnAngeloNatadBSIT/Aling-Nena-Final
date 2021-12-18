@@ -15,6 +15,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
   @ViewChild('myfab', { read: ElementRef }) carBtn: ElementRef;
   cart = {};
   cartAnimation: Animation;
+  selectTabs: string = "all";
  
   constructor(
     private productService: ProductService, 
@@ -64,9 +65,5 @@ export class Tab2Page implements OnInit, AfterViewInit {
     });
     await modal.present();
   }
-  
-  // testProd(){
-  //   this.productService.getOrders();
-  // }
 
 }

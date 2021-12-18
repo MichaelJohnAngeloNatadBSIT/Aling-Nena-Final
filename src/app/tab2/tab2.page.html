@@ -7,10 +7,62 @@
 </ion-header>
  
 <ion-content>
- 
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-segment [(ngModel)]="selectTabs" scrollable>
+        <ion-segment-button value="all">
+          <ion-label>All Foods</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1: Ulam/Food">
+          <ion-label>Food/Ulam</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="2: Inumin/Beverages">
+          <ion-label>Beverages</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="3: Panghimagas/Dessert">
+          <ion-label>Desserts</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="4: Sabaw/Soups">
+          <ion-label>Soups</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-list>
     <ion-item *ngFor="let p of products | async" (click)="p.expanded = !p.expanded">
-
+      <div [ngSwitch]="selectTabs">
+        <div *ngSwitchCase ="'all'">
+        <div class="card-align">
+          <ion-card>
+            <ion-img [src]="p.image" class="rand-img"></ion-img>
+              <ion-card-header>
+                <ion-card-title>{{ p.title }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-label class="ion-text-wrap">
+                  <b>{{ p.price | currency:'₱' }}</b>
+                  <p>{{ p.stock }} left</p>
+                  <div [hidden]="!p.expanded">
+                    {{ p.description }}
+                  </div>
+                </ion-label>
+                <br/>
+                <ion-button color="primary" (click)="addToCart($event, p)"><ion-icon name="cart"></ion-icon></ion-button>
+                <ion-button (click)="removeFromCart($event, p)"><ion-icon name="trash"></ion-icon></ion-button>
+              </ion-card-content>
+            </ion-card>
+        </div>
+   
+      </div>
+    </div>
+    </ion-item>
+  </ion-list>
+ 
+  <ion-list>
+  <ion-item *ngFor="let p of products | async" (click)="p.expanded = !p.expanded">
+    <div [ngSwitch]="selectTabs">
+    <div *ngSwitchCase ="p.category">
       <div class="card-align">
         <ion-card>
           <ion-img [src]="p.image" class="rand-img"></ion-img>
@@ -31,8 +83,13 @@
             </ion-card-content>
           </ion-card>
       </div>
-    </ion-item>
+    </div>
+  </div>
+
+  </ion-item>
   </ion-list>
+
+  
  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openCart()" color="secondary" #myfab>
